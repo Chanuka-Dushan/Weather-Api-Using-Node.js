@@ -1,4 +1,3 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -10,6 +9,11 @@ const MONGODB_URI = process.env.MONGODB_URI;
 // Middleware
 app.use(express.json());
 
+
+app.get('/', (req, res) => {
+  res.send('Welcome to Weather API');
+});
+
 // Routes
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
@@ -18,13 +22,11 @@ app.use('/users', usersRouter);
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    // Remove useFindAndModify: false,
-  }).then(() => {
+}).then(() => {
     console.log('Connected to MongoDB');
-  }).catch(err => {
+}).catch(err => {
     console.error('Error connecting to MongoDB:', err.message);
-  });
-  
+});
 
 // Start server
 app.listen(PORT, () => {
